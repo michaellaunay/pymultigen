@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pymultigen"
+version = "0.2.0"
+description = "Multi-file frontend for single-file code generators."
+readme = "README.rst"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Mike Pagel", email = "mike@mpagel.de"}]
+keywords = ["code generator", "jinja", "multi-file"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://github.com/moltob/pymultigen"
+
+[project.optional-dependencies]
+jinja = ["jinja2>=3.1"]
+format = ["autopep8>=2"]
+test = ["pytest>=8", "jinja2>=3.1", "autopep8>=2"]
+
+[tool.setuptools.packages.find]
+include = ["multigen*"]

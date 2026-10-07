@@ -43,7 +43,7 @@ with a simple:
 
     $ pip install pymultigen
 
-The library works with any version of Python >= 3.3.
+The library works with CPython 3.12, 3.13 and 3.14 (standard GIL builds).
 
 Usage
 -----
@@ -177,8 +177,8 @@ make sure that:
 
 * New dependencies (like autopep8 in the existing pep8 formatter) are only imported in the
   formatting function. This way user only pay for what they use.
-* Please write unittests and add your possible dependencies to the ``tests_require`` argument in
-  ``setup.py``.
+* Please write unittests and add your possible dependencies to the ``test`` extra in
+  ``pyproject.toml``.
 
 There is not much more to it.
 
@@ -225,3 +225,22 @@ The implementation shows two more things:
 * ``create_template_context`` is a function implemented in base class ``TemplateTask``. It
   implements the very common case of dictionaries being used as template context objects. Of course
   you can override this if it doesn't match your engine.
+
+Development and output contracts
+-------------------------------
+
+Install the optional integrations with ``pip install ".[jinja,format]"``;
+for development use ``pip install ".[test]"`` and ``python -m pytest tests``.
+Build distributions with ``python -m build``.
+
+Jinja output is UTF-8. Rendering and formatting complete before the destination
+is opened, so errors in those stages preserve an existing file and create no
+new file. Write failures may leave partial output; generation is not a transaction
+across files. Tasks and elements execute in their supplied order; callers must
+supply stable iteration and deterministic templates/formatters for reproducibility.
+
+For compatibility, absolute paths bypass the output folder and relative paths
+may contain ``..``; symlinks are followed. The output folder does not confine
+untrusted model paths. Validate such paths in the application. Class-level task
+objects are shared between generator instances; use instance-level tasks when
+contexts differ (as pyecoregen does). No concurrency guarantee is provided.

@@ -97,4 +97,4 @@ def test__template_task__create_context():
 def test__unexpected_argument(factory):
     with pytest.raises(AttributeError) as ex:
         factory(unexpected=42)
-        assert 'unexpected' in ex.message
+    assert 'unexpected' in str(ex.value)

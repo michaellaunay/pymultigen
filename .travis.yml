@@ -1,22 +1,9 @@
 language: python
 python:
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+  - "3.12"
+  - "3.13"
+  - "3.14"
 install:
-  - pip install --upgrade setuptools
-  - pip install --upgrade pytest pytest-cov coveralls
-  - pip install -e .
+  - pip install ".[test]"
 script:
-  - python setup.py test -a -v -a --cov=multigen
-after_success:
-  - coveralls
-deploy:
-  provider: pypi
-  user: $PYPI_USER
-  password: $PYPI_PASSWORD
-  distributions: "bdist_wheel"
-  on:
-    tags: true
-    python: 3.6
+  - python -m pytest tests

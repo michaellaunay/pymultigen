@@ -67,5 +67,5 @@ def test__jinja_task__generate_file(mock_create_template_context):
         task.generate_file(mock.sentinel.ELEMENT, 'filepath.ext')
 
     mock_template.render.assert_called_once_with(element=mock.sentinel.ELEMENT)
-    mock_open.assert_called_once_with('filepath.ext', 'wt')
+    mock_open.assert_called_once_with('filepath.ext', 'wt', encoding='utf-8')
     mock_open().write.assert_called_once_with('rendered text')

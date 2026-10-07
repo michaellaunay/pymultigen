@@ -67,8 +67,8 @@ class Task:
     @staticmethod
     def ensure_folder(filepath):
         dirname = os.path.dirname(filepath)
-        if not os.path.isdir(dirname):
-            os.makedirs(dirname)
+        if dirname:
+            os.makedirs(dirname, exist_ok=True)
 
     def filtered_elements(self, model):
         """Iterator over model elements to execute this task for."""

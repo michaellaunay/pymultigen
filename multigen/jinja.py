@@ -42,5 +42,6 @@ class JinjaTask(TemplateFileTask):
         template = self.environment.get_template(self.template_name)
         context = self.create_template_context(element=element)
 
-        with open(filepath, 'wt') as file:
-            file.write(self.formatter(template.render(**context)))
+        rendered = self.formatter(template.render(**context))
+        with open(filepath, 'wt', encoding='utf-8') as file:
+            file.write(rendered)
